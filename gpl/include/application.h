@@ -29,6 +29,7 @@ namespace gpl
 		//
 		bool findCommand(std::string inp, std::string shortName, std::string longName);
 		void printNotValidCommand();
+		void printNotValidParam(const std::string& param) const;
 		void printHelp();
 		//
 		template <typename T>

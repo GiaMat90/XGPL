@@ -150,6 +150,11 @@ namespace gpl
 		m_console.print("Command not recognised", gpl::ConsoleColor::RED);
 	}
 
+	void Application::printNotValidParam(const std::string& command) const
+	{
+		m_console.print("Param not valid for command " + command, gpl::ConsoleColor::RED);
+	}
+
 	template<>
 	bool Application::getParams<std::string>(const std::string& inp, const std::string commandName, std::string& param)
 	{
