@@ -72,8 +72,8 @@ namespace gpl
 
 		if (m_bUseTimeout && COM_STATE::COM_READY == m_state)
 		{
-			m_timeouts.ReadIntervalTimeout = 50;
-			m_timeouts.ReadTotalTimeoutConstant = 0;
+			m_timeouts.ReadIntervalTimeout = 10;
+			m_timeouts.ReadTotalTimeoutConstant = 10;
 			m_timeouts.ReadTotalTimeoutMultiplier = 0;
 			m_timeouts.WriteTotalTimeoutConstant = 0;
 			m_timeouts.WriteTotalTimeoutMultiplier = 0;
@@ -112,10 +112,11 @@ namespace gpl
 		{
 			if (!ReadFile(m_hSerial, buffer, BUFFER_SIZE, &dwBytesRead, NULL))
 			{
+				auto lastError = GetLastError();
 				//error occurred. Report to user.
 				m_state = COM_STATE::RECEIVING_ERROR;
 			}
-			else
+			else if (!std::string(buffer).empty())
 			{
 				while (m_flag.test_and_set()) {};
 				m_receivedBuffers.push(std::string(buffer));				
@@ -137,8 +138,9 @@ namespace gpl
 		{
 			//error occurred. Report to user.
 			auto lastError = GetLastError();
-			m_state = COM_STATE::SENDING_ERROR;
-		}	
+			// WriteFile failed, but isn't delayed. Report error and abort.
+			m_state = COM_STATE::SENDING_ERROR;	
+		}
 	}
 
 	// free-function

@@ -8,4 +8,9 @@ namespace gpl
 	{
 		//ToDo
 	}
+
+	void Console::keyboardInput(const std::string& s) const
+	{
+		//ToDo
+	}
 }

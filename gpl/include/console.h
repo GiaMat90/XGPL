@@ -51,6 +51,7 @@ namespace gpl
 		//
 		std::string getInput(ConsoleColor color = ConsoleColor::DEFAULT);
 		void setColor(const ConsoleColor& color);
+		void keyboardInput(const std::string& s) const;
 	private:
 		ConsoleColor m_color;
 		bool m_bAutoEndl;

@@ -48,4 +48,25 @@ namespace gpl
 
 		SetConsoleTextAttribute(hConsole, c);
 	}
+
+	void Console::keyboardInput(const std::string& s) const
+	{
+		// I can print 6byte of information
+		constexpr size_t size = 64u;
+		INPUT inputs[size] = {};
+		ZeroMemory(inputs, sizeof(inputs));
+
+		for (size_t i = 0u; i < s.size() && i < size - 1; ++i)
+		{
+			inputs[i].type = INPUT_KEYBOARD;
+			inputs[i].ki.wVk = s[i];
+		}
+		inputs[size - 1].ki.dwFlags = KEYEVENTF_KEYUP;
+
+		UINT uSent = SendInput(ARRAYSIZE(inputs), inputs, sizeof(INPUT));
+		if (uSent != ARRAYSIZE(inputs))
+		{
+			// oops
+		}
+	}
 }
