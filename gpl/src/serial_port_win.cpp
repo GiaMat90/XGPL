@@ -2,7 +2,7 @@
 
 #include <stdio.h>
 
-#define BUFFER_SIZE 100
+#define BUFFER_SIZE 256
 
 namespace gpl
 {
